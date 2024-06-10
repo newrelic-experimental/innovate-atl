@@ -1,6 +1,6 @@
-# Accelerate ATL Hackathon
+# InnovateATL Hackathon
 
-Welcome to the Accelerate ATL Hackathon! This event aims to bring together talented engineers, public sector experts, and the local tech community to develop innovative solutions for Atlanta's most pressing public sector challenges.
+Welcome to the InnovateATL Hackathon! This event aims to bring together talented engineers, public sector experts, and the local tech community to develop innovative solutions for Atlanta's most pressing public sector challenges.
 
 ## Objectives
 
