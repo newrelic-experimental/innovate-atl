@@ -1,4 +1,3 @@
-![Screenshot_2024-05-27_at_12 35 41_PM-removebg-preview](https://github.com/lazyplatypus/accelerate-atl/assets/10321085/12bb4de2-505c-49f6-8aa5-2442b0a6f1ed)
 # Accelerate ATL Hackathon
 
 Welcome to the Accelerate ATL Hackathon! This event aims to bring together talented engineers, public sector experts, and the local tech community to develop innovative solutions for Atlanta's most pressing public sector challenges.
@@ -69,4 +68,5 @@ Users can take a photo of a car break-in incident, and the tool automatically in
 - **Second Place:** $3,000
 - **Third Place:** $1,000
 
+For official rules click [here](rules.pdf).
 We are excited to see your innovative solutions and how they can help transform Atlanta's public sector! Happy hacking!
