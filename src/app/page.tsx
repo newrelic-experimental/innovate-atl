@@ -3,6 +3,8 @@ import { ChatOpenAI, OpenAI } from "@langchain/openai";
 import { Suspense } from "react";
 import { HumanMessage, SystemMessage, ToolMessage } from "@langchain/core/messages";
 
+const systemPrompt = new SystemMessage(`You are the best librarian for fequently asked questions about the city of Atlanta. You will be given search queries in given spoken language, any you will seach for a answer and relay the response in the original spoken language of the user.`);
+
 async function Results() {
 	const model = new ChatOpenAI({
 		model: "gpt-4o",
@@ -32,15 +34,12 @@ async function Results() {
 		],
 		tool_choice: "auto",
 	});
-	const res = await model.invoke(
-		[
-			new SystemMessage(
-				`You are the best librarian for fequently asked questions about the city of Atlanta.
 
-You will be given search queries in given spoken language, any you will seach for a answer and relay the response in the original spoken language of the user.`),
-			new HumanMessage("¿Cómo pago mi factura de agua?")
-		],
-	);
+	const ogPrompt = [
+		systemPrompt,
+		new HumanMessage("¿Cómo pago mi factura de agua?")
+	];
+	const res = await model.invoke(ogPrompt);
 
 	const toolMessages = res.additional_kwargs.tool_calls?.map((toolCall) => {
 		return new ToolMessage({
@@ -51,11 +50,7 @@ You will be given search queries in given spoken language, any you will seach fo
 	});
 
 	const finalResponse = await model.invoke([
-		new SystemMessage(
-			`You are the best librarian for fequently asked questions about the city of Atlanta.
-
-You will be given search queries in given spoken language, any you will seach for a answer and relay the response in the original spoken language of the user.`),
-		new HumanMessage("¿Cómo pago mi factura de agua?"),
+		...ogPrompt,
 		res,
 		...(toolMessages ?? []),
 	]);
