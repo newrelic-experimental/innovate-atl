@@ -3,3 +3,5 @@ node_modules/
 build/
 out/
 .next/
+.env.local
+.idea/
