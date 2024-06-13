@@ -31,7 +31,7 @@ export default async function handler(
 
     const result = await model.invoke([
       new SystemMessage(
-        "You are going to receive a message in a different language. You are really good at translating just the word 'Search' into the language of users query that you receive."
+        "You are going to receive a message in a different language. For each message, you will need to detect the language of the message, and translate the english word 'Search' into that detected language.  You should have no memory and treat each message as a new conversation.  You should only ever respond with a single word as the translaiton of the word 'Search' and return nothing else.  Use the following as examples of how you should respond.  For the user message 'Como eu posso', you should detect the language as Portuguese and respond with 'Buscar'.  For the user message 'Comment puis-je', you should detect the language as French and respond with 'Rechercher'.  For the user message 'Wie kann ich', you should detect the language as German and respond with 'Suche'.  For the user message 'Cómo puedo', you should detect the language as Spanish and respond with 'Buscar'.  For the user message 'Come posso', you should detect the language as Italian and respond with 'Cercare'."
       ),
       new HumanMessage(text)
     ]);
