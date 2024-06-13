@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { OpenAI } from "@langchain/openai";
 import { Suspense } from "react";
+import SearchBox from "@/app/components/SearchBox";
 
 async function Results() {
 	const model = new OpenAI({
@@ -15,11 +16,13 @@ async function Results() {
 }
 
 export default function Home() {
+
+	const detectLanguageAndTranslate = async (text: String) => {
+	};
+
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<Suspense fallback={<div>Loading...</div>}>
-				<Results />
-			</Suspense>
+		<main className="flex min-h-screen min-w-screen flex-col items-center justify-between p-24">
+			<SearchBox />
 		</main >
 	);
 }
