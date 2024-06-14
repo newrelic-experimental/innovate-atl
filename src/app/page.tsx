@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { ChatOpenAI, OpenAI } from "@langchain/openai";
 import { Suspense } from "react";
+import SearchBox from "@/app/components/SearchBox";
+
 import { HumanMessage, SystemMessage, ToolMessage } from "@langchain/core/messages";
 
 const systemPrompt = new SystemMessage(`You are the best librarian for fequently asked questions about the city of Atlanta. You will be given search queries in given spoken language, any you will seach for a answer and relay the response in the original spoken language of the user.`);
+
 
 async function Results() {
 	const model = new ChatOpenAI({
@@ -60,10 +63,8 @@ async function Results() {
 
 export default function Home() {
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<Suspense fallback={<div>Loading...</div>}>
-				<Results />
-			</Suspense>
+		<main className="flex min-h-screen min-w-screen flex-col items-center justify-between p-24">
+			<SearchBox />
 		</main >
 	);
 }
