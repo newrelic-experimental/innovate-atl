@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SearchResult from "@/app/components/SearchResult";
 
 const translations = [
   "Buscar en cualquier idioma...", "Rechercher dans n'importe quelle langue...", "Suche in jeder Sprache...", "Cercare in qualsiasi lingua...", "Buscar en cualquier idioma...",
@@ -26,6 +25,7 @@ const SearchBox: React.FC = () => {
   const [isLoadingDetect, setIsLoadingDetect] = useState(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [searchResult, setSearchResult] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,12 +73,18 @@ const SearchBox: React.FC = () => {
     setIsLoadingSearch(true);
     try {
       const response = await axios.post('/api/search', { text: searchValue });
-      const lang = response.data.results.detectedLanguage;
-      const phrase = response.data.results.translatedText;
-      setSearchResult(response.data.results);
+      const result = response.data.results;
+      if (!result || result === "") {
+        setErrorMessage("A translation error occurred.");
+        setSearchResult("");
+      } else {
+        setSearchResult(result);
+        setErrorMessage("");
+      }
       setCollapsed(true);
     } catch (error) {
       console.error('Error detecting language:', error);
+      setErrorMessage("An error occurred while searching.");
     } finally {
       setIsLoadingSearch(false);
     }
@@ -116,10 +122,16 @@ const SearchBox: React.FC = () => {
           </div>
         </div>
       </div>
-      {searchResult && (
-        <div className="mb-4 text-gray-100 font-medium text-sm">
-          {searchResult}
+      {errorMessage ? (
+        <div className="mb-4 text-red-500 font-medium text-sm">
+          {errorMessage}
         </div>
+      ) : (
+        searchResult && (
+          <div className="mb-4 text-gray-100 font-medium text-sm">
+            {searchResult}
+          </div>
+        )
       )}
     </>
   );
