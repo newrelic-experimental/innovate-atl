@@ -1,72 +1,31 @@
-# InnovateATL Hackathon
+# Search Atlanta
+Natrual multilingual search summarizer for city of Atlanta website.
 
-Welcome to the InnovateATL Hackathon! This event aims to bring together talented engineers, public sector experts, and the local tech community to develop innovative solutions for Atlanta's most pressing public sector challenges.
+## Project Description
+The "Search Atlanta" project is a natural multilingual search summarizer designed specifically for the city of Atlanta website. It aims to enhance the search functionality of the website by providing users with concise and relevant summaries of search results.
 
-## Objectives
+## Features
+- Multilingual Support: The search summarizer is capable of processing search queries in multiple languages, ensuring a seamless user experience for visitors from diverse linguistic backgrounds.
+- Summarization: The project utilizes advanced natural language processing techniques to generate concise summaries of search results, allowing users to quickly grasp the main points without having to read through lengthy documents.
+- Customization: The search summarizer can be easily customized to fit the specific needs and requirements of the Atlanta website, ensuring optimal performance and relevance of search results.
 
-- **Harness Cutting-Edge AI:** Utilize state-of-the-art LLMs to build creative solutions addressing Atlanta's pressing issues.
-- **Public Sector Collaboration:** Foster collaboration between engineers and public sector experts for impactful, practical solutions.
-- **Community Engagement:** Engage the local tech community to support public welfare through technology.
-- **Solution Implementation:** Develop practical prototypes that can be piloted and implemented by the city's departments.
+## Installation
+To install and run the "Search Atlanta" project, follow these steps:
+1. Clone the repository: `git clone https://github.com/stablekernel/innovate-atl.git`
+2. Navigate to the project directory: `cd search-atlanta`
+3. Install the required dependencies: `npm install`
+4. Configure the project environment: `cp .env.example .env` and update the environment variables as needed.
+5. Start the development server: `npm run dev`
 
-## Problem Statements
+## Usage
+To use the "Search Atlanta" search summarizer, follow these steps:
+1. Open the project in your web browser.
+2. Enter your search query in the search bar.
+3. Click the search button to view the search results.
 
-Participants can choose from one of the following key challenges or propose their own issue related to the public sector in Atlanta:
-
-### Improving Public Transportation
-**Problem:** Enhance communication and service accessibility for MARTA (Metropolitan Atlanta Rapid Transit Authority).
-- **Solution Examples:** AI-powered chatbots for real-time customer support, natural language-based trip planning, and feedback systems.
-
-### Enhancing Emergency Services Communication
-**Problem:** Optimize communication between emergency responders and the public.
-- **Solution Examples:** LLM-driven public alerts system, predictive emergency response models using public data, and advanced disaster communication platforms.
-
-### Streamlining City Administration
-**Problem:** Improve citizen engagement and streamline administrative processes.
-- **Solution Examples:** Automated FAQs and chatbot assistants for city departments, paperwork simplification using NLP, and real-time feedback mechanisms.
-
-### Facilitating Homeless Support Services
-**Problem:** Coordinate support services for the homeless population.
-- **Solution Examples:** NLP-enabled data collection for service needs, automated resource directories, and LLM-assisted case management.
-
-### Promoting Transparency in Local Governance
-**Problem:** Enhance transparency and citizen participation in local government decisions.
-- **Solution Examples:** NLP-based analysis of public documents, citizen-friendly government portals, and automated policy brief generation.
-
-## Example Project
-
-### 311+
-Users can take a photo of a car break-in incident, and the tool automatically inputs a 311 report, using metadata from the photo to identify the location and time. "311+" fills out the necessary form, making it easier for victims to report incidents quickly and accurately.
-
-## Guidelines
-
-- **Team Size:** 3-5 members per team
-
-### Technology
-
-- **Preferred LLMs:** GPT-4, GPT-3, LLaMA, Claude, etc.
-- **Other Technologies:** NLP frameworks, machine learning libraries, and relevant public datasets
-
-### Submission Requirements
-
-- **Source Code Repository**
-- **Technical Documentation**
-- **Solution Presentation (10-minute pitch)**
-- **Demo Video (max. 3 minutes)**
-
-### Evaluation Criteria
-
-- **Relevance (20%):** How well does the solution address the identified public sector challenge?
-- **Innovation (20%):** Is the solution novel and creative in its approach?
-- **Technical Implementation (20%):** Quality of code, design, and technical documentation.
-- **Scalability (20%):** Potential for implementation across multiple departments/organizations.
-- **User Experience (20%):** How intuitive and user-friendly is the solution?
-
-## Prizes
-
-- **First Place:** $7,000
-- **Second Place:** $3,000
-- **Third Place:** $1,000
-
-For official rules click [here](rules.pdf).
-We are excited to see your innovative solutions and how they can help transform Atlanta's public sector! Happy hacking!
+## Contributing
+We welcome contributions from the community to improve the "Search Atlanta" project. If you would like to contribute, please follow these guidelines:
+- Fork the repository.
+- Create a new branch for your feature or bug fix.
+- Make your changes and ensure that the code passes all tests.
+- Submit a pull request detailing your changes.
