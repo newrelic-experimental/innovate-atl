@@ -45,10 +45,6 @@ Persona: World Cup fan trying to find information about transit.
 Persona: Person seeking asylum looking for help. In Spanish!
 "servicios de asilo"
 
-![atlantaga.gov](atlantagov-website.png)
-
-![atl311.com](atl311.png)
-
 
 --- 
 
