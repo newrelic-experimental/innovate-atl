@@ -23,7 +23,8 @@ const SearchBox: React.FC = () => {
   const [buttonLabel, setButtonLabel] = useState("Search");
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
   const [collapsed, setCollapsed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDetect, setIsLoadingDetect] = useState(false);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const SearchBox: React.FC = () => {
   }, []);
 
   const detectLanguageAndTranslate = async (text: string) => {
-    setIsLoading(true);
+    setIsLoadingDetect(true);
     try {
       const response = await axios.post('/api/detect', { text });
       const translatedText = response.data.translatedText;
@@ -52,7 +53,7 @@ const SearchBox: React.FC = () => {
     } catch (error) {
       console.error('Error detecting language:', error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingDetect(false);
     }
   };
 
@@ -69,6 +70,7 @@ const SearchBox: React.FC = () => {
   };
 
   const handleButtonClick = async () => {
+    setIsLoadingSearch(true);
     try {
       const response = await axios.post('/api/search', { text: searchValue });
       const lang = response.data.results.detectedLanguage;
@@ -77,6 +79,8 @@ const SearchBox: React.FC = () => {
       setCollapsed(true);
     } catch (error) {
       console.error('Error detecting language:', error);
+    } finally {
+      setIsLoadingSearch(false);
     }
   };
 
@@ -94,12 +98,20 @@ const SearchBox: React.FC = () => {
           <div className="relative">
             <button
               onClick={handleButtonClick}
-              className="px-4 py-3 text-lg text-white bg-[#0c7db2] rounded-full shadow-lg capitalize"
+              className="px-20 py-3 text-lg text-white bg-[#0c7db2] rounded-full shadow-lg capitalize"
             >
               {buttonLabel}
             </button>
-            {isLoading && (
+            {isLoadingDetect && (
               <div className="absolute inset-0 rounded-full border-4 animate-pulse-border pointer-events-none"></div>
+            )}
+            {isLoadingSearch && (
+              <div className="absolute right-0 top-0 bottom-0 mr-2 flex items-center">
+                <svg className="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+              </div>
             )}
           </div>
         </div>
