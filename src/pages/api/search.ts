@@ -13,7 +13,7 @@ If you receive the message 'Hallo, wie geht es dir?', you should detect the lang
 If you receive the message 'Olá, como você está?', you should detect the language as Portuguese and respond with 'Portuguese---Hello, how are you?'.`);
 
 const systemPromptToLanguage = new SystemMessage(`You are the best translator in the world.  You are going to receive a message in English and a language to translate it into.  You will return the translated message.
-For examples, if you receive the message 'Hello, how are you?---Spanish', you should respond with 'Hola, ¿cómo estás?'.  If you receive the message 'Hello, how are you? --- French', you should respond with 'Bonjour, comment ça va?'.
+For examples, if you receive the message 'Hello, how are you?---Spanish', you should respond with 'Hola, ¿cómo estás?'.  If you receive the message 'Hello, how are you?---French', you should respond with 'Bonjour, comment ça va?'.
 `);
 
 type SearchResult = {

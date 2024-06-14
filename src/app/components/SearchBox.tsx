@@ -24,6 +24,7 @@ const SearchBox: React.FC = () => {
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,10 +74,11 @@ const SearchBox: React.FC = () => {
       const lang = response.data.results.detectedLanguage;
       const phrase = response.data.results.translatedText;
       alert (`Detected language: ${lang}\nTranslated phrase: ${phrase}`);
+      setSearchResult(response.data.results);
+      setCollapsed(true);
     } catch (error) {
       console.error('Error detecting language:', error);
     }
-    setCollapsed(true);
   };
 
   return (
@@ -103,33 +105,10 @@ const SearchBox: React.FC = () => {
           </div>
         </div>
       </div>
-      {collapsed && (
-        <>
-          <SearchResult
-            title="Sample Title"
-            summary="This is a summary of the search result. It provides a brief description of the content.  Lorem ipset nonsense but this needs to be a lot longer and I don't wanna go find that thing."
-            link="https://example.com"
-            location="1600 Amphitheatre Parkway, Mountain View, CA"
-            locationTitle="Google Headquarters"
-          />
-          <SearchResult
-            title="Another Title"
-            summary="Here is another summary of a different search result."
-            link="https://anotherexample.com"
-          />
-          <SearchResult
-            title="Sample Title"
-            summary="This is a summary of the search result. It provides a brief description of the content.  This is a summary of the search result. It provides a brief description of the content.  This is a summary of the search result. It provides a brief description of the content.  This is a summary of the search result. It provides a brief description of the content."
-            link="https://example.com"
-            location="1600 Amphitheatre Parkway, Mountain View, CA"
-            locationTitle="See Park on Google Maps"
-          />
-          <SearchResult
-            title="Another Title"
-            summary="Here is another summary of a different search result."
-            link="https://anotherexample.com"
-          />
-        </>
+      {searchResult && (
+        <div className="mb-4 text-gray-100 font-medium text-sm">
+          {searchResult}
+        </div>
       )}
     </>
   );
