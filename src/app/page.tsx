@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { ChatOpenAI, OpenAI } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { Suspense } from "react";
 import SearchBox from "@/app/components/SearchBox";
 
