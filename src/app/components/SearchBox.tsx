@@ -67,8 +67,15 @@ const SearchBox: React.FC = () => {
     }, 600));
   };
 
-  const handleButtonClick = () => {
-    alert("Search - " + searchValue);
+  const handleButtonClick = async () => {
+    try {
+      const response = await axios.post('/api/search', { text: searchValue });
+      const lang = response.data.results.detectedLanguage;
+      const phrase = response.data.results.translatedText;
+      alert (`Detected language: ${lang}\nTranslated phrase: ${phrase}`);
+    } catch (error) {
+      console.error('Error detecting language:', error);
+    }
     setCollapsed(true);
   };
 
