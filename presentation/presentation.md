@@ -2,6 +2,8 @@
 
 THIS IS NOT A WORD FOR WORD SCRIPT. 
 
+slides : https://docs.google.com/presentation/d/1R0HWr7r3Oqo7ukEx7GMZHpMBHeCEOTG804gD0O3ftcU/edit?usp=sharing
+
 Rankings
 - **Relevance (20%):** How well does the solution address the identified public sector challenge?
 - **Innovation (20%):** Is the solution novel and creative in its approach?
@@ -10,8 +12,15 @@ Rankings
 - **User Experience (20%):** How intuitive and user-friendly is the solution?
 
 ---
-
 **Intro: Relevance** 
+
+Names of team members
+
+Shout out to Stable Kernel!
+
+--- 
+
+**Relevance** 
 
 The panalist from the city government expressed a common challenge of communicating informatinon to the people of Atlanta. 
 
