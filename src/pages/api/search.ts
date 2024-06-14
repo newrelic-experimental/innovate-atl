@@ -5,6 +5,7 @@ import {ChatOpenAI} from "@langchain/openai";
 import {HumanMessage, SystemMessage, ToolMessage} from "@langchain/core/messages";
 import {searchWithPrompt} from "@/app/searchLoad";
 import * as sea from "node:sea";
+import { sleep } from 'langchain/util/time';
 
 const systemPromptToEnglish = new SystemMessage(`You are the best translator in the world.  You are going to receive a message in a different language.
 For each message, you will need to detect the language of the message, and translate the phrase into English.  You will return the detected language, three hyphens, and then the translated phrase.
@@ -12,8 +13,8 @@ For examples, if you receive the message 'Hola, ¿cómo estás?', you should det
 If you receive the message 'Hallo, wie geht es dir?', you should detect the language as German and respond with 'German---Hello, how are you?'.  If you receive the message 'Ciao, come stai?', you should detect the language as Italian and respond with 'Italian---Hello, how are you?'.  
 If you receive the message 'Olá, como você está?', you should detect the language as Portuguese and respond with 'Portuguese---Hello, how are you?'.`);
 
-const systemPromptToLanguage = new SystemMessage(`You are the best translator in the world.  You are going to receive a message in English and a language to translate it into.  You will return the translated message.
-For examples, if you receive the message 'Hello, how are you?---Spanish', you should respond with 'Hola, ¿cómo estás?'.  If you receive the message 'Hello, how are you?---French', you should respond with 'Bonjour, comment ça va?'.
+const systemPromptToLanguage = new SystemMessage(`You are the best translator in the world.  You are going to receive a message in English and a language to translate it into. The messages will be formatted like this: '$message --- $language'. You will return the translated message.
+  For examples, if you receive the message 'Hello, how are you? --- Spanish', you should respond with 'Hola, ¿cómo estás?'.  If you receive the message 'Hello, how are you? --- French', you should respond with 'Bonjour, comment ça va?'.
 `);
 
 type SearchResult = {
@@ -95,7 +96,7 @@ async function TranslateToOriginal(phrase: string, language: string) {
             properties: {
               query: {
                 type: "string",
-                description: "English search query that needs to be translated",
+                description: "English search query result that needs to be translated back to the spcified language",
               },
             }
           }
@@ -142,6 +143,8 @@ export default async function handler(
     //Search with translated phrase to get results
     searchResults = (await searchWithPrompt(translation.translatedText))?.answer;
     console.log(searchResults);
+
+    sleep(10000);
 
     //Translate results back to original language
     const resultx = (await TranslateToOriginal(searchResults, translation.detectedLanguage))?.content;
