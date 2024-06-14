@@ -5,7 +5,7 @@ import SearchBox from "@/app/components/SearchBox";
 
 import { HumanMessage, SystemMessage, ToolMessage } from "@langchain/core/messages";
 
-const systemPrompt = new SystemMessage(`You are the best librarian for fequently asked questions about the city of Atlanta. You will be given search queries in given spoken language, any you will seach for a answer and relay the response in the original spoken language of the user.`);
+const systemPrompt = new SystemMessage(`You are the best librarian for frequently asked questions about the city of Atlanta. You will be given search queries in given spoken language, any you will search for a answer and relay the response in the original spoken language of the user.`);
 
 
 async function Results() {
@@ -21,13 +21,13 @@ async function Results() {
 				type: "function",
 				function: {
 					name: "search_faq",
-					description: "Search the City of Atlanta fequently asked questions",
+					description: "Search the City of Atlanta frequently asked questions",
 					parameters: {
 						type: "object",
 						properties: {
 							query: {
 								type: "string",
-								description: "English search query for the fequently asked questions",
+								description: "English search query for the frequently asked questions",
 							},
 						},
 						required: ["query"],

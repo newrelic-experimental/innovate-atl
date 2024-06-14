@@ -13,6 +13,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      animation: {
+        'pulse-border': 'pulse-border 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        'pulse-border': {
+          '0%, 100%': { borderColor: 'rgba(0, 0, 0, 0)' },
+          '50%': { borderColor: 'rgba(255, 255, 255, 0.75)' },
+        },
+      },
     },
   },
   plugins: [],
