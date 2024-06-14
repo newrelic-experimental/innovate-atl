@@ -40,7 +40,7 @@ Users can take a photo of a car break-in incident, and the tool automatically in
 
 ## Guidelines
 
-- **Team Size:** 3-5 members per team
+- **Team Size:** 1-4 members per team
 
 ### Technology
 
