@@ -73,7 +73,6 @@ const SearchBox: React.FC = () => {
       const response = await axios.post('/api/search', { text: searchValue });
       const lang = response.data.results.detectedLanguage;
       const phrase = response.data.results.translatedText;
-      alert (`Detected language: ${lang}\nTranslated phrase: ${phrase}`);
       setSearchResult(response.data.results);
       setCollapsed(true);
     } catch (error) {
