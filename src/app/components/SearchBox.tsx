@@ -80,13 +80,13 @@ const SearchBox: React.FC = () => {
             value={searchValue}
             onChange={(e) => handleInputChange(e)}
             type="text"
-            className="w-[500px] px-4 py-3 text-lg text-gray-700 placeholder-gray-500 bg-white bg-opacity-90 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-[500px] px-4 py-3 text-lg text-gray-700 placeholder-gray-500 bg-white bg-opacity-90 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c7db2]"
             placeholder={placeholder}
           />
           <div className="relative">
             <button
               onClick={handleButtonClick}
-              className="px-4 py-3 text-lg text-white bg-purple-600 rounded-full shadow-lg capitalize"
+              className="px-4 py-3 text-lg text-white bg-[#0c7db2] rounded-full shadow-lg capitalize"
             >
               {buttonLabel}
             </button>
