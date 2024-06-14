@@ -1,10 +1,27 @@
+from pyexpat.errors import messages
+from sched import Event
 import requests
-from google.transit import gtfs_realtime_pb2
+from .api import MARTA
 import openai
+from google.transit import gtfs_realtime_pb2
 
 # Set your API keys here
-MARTA_GTFS_REALTIME_URL = 'your_marta_gtfs_realtime_url'
+MARTA_API_KEY = '3db0ab30-d7a8-4b08-9a0e-9b153e51de2a'
 OPENAI_API_KEY = 'your_openai_api_key'
+base_url = 'http://developer.itsmarta.com'
+TRAIN_PATH = '/RealtimeTrain/RestServiceNextTrain/GetRealtimeArrivals'
+MARTA_GTFS_REALTIME_URL = 'https://gtfs-rt.itsmarta.com/TMGTFSRealTimeWebService/tripupdate'
+
+
+
+# Function to fetch data from MARTA's API
+def get_marta_train(TRAIN_PATH,**kwergs):
+    headers = {
+        'api_key': MARTA_API_KEY
+    }
+    response = requests.get(f'{base_url}/{TRAIN_PATH}', headers=headers, **kwergs)
+    response.raise_for_status()  # Raise an error for bad status codes
+    return response.json()
 
 # Function to fetch and parse GTFS Realtime data
 def fetch_gtfs_realtime_data(url):
@@ -21,38 +38,41 @@ def format_gtfs_data(feed):
         if entity.HasField('trip_update'):
             trip_update = entity.trip_update
             formatted_data.append(f"Trip ID: {trip_update.trip.trip_id}, Start Time: {trip_update.trip.start_time}, Route ID: {trip_update.trip.route_id}")
-        elif entity.HasField('vehicle'):
-            vehicle = entity.vehicle
-            formatted_data.append(f"Vehicle ID: {vehicle.vehicle.id}, Position: ({vehicle.position.latitude}, {vehicle.position.longitude}), Current Stop: {vehicle.stop_id}")
-    return "\n".join(formatted_data)
+            return "\n".join(formatted_data)
 
-# Function to interact with ChatGPT API
-def chatgpt_interaction(prompt):
-    openai.api_key = OPENAI_API_KEY
-    response = openai.Completion.create(
-        engine="davinci-codex",  # Choose the appropriate engine
-        prompt=prompt,
-        max_tokens=150  # Adjust as necessary
-    )
-    return response.choices[0].text.strip()
-
-# Example function to link MARTA's GTFS Realtime API to ChatGPT
-def marta_to_chatgpt():
-    # Fetch GTFS Realtime data from MARTA
-    feed = fetch_gtfs_realtime_data(MARTA_GTFS_REALTIME_URL)
-    
-    # Format the data for ChatGPT
-    formatted_data = format_gtfs_data(feed)
-    
-    # Create a prompt for ChatGPT with the fetched data
-    prompt = f"MARTA GTFS Realtime data:\n{formatted_data}\n\nProvide an analysis or summary of the above data."
-    
-    # Get response from ChatGPT
-    chatgpt_response = chatgpt_interaction(prompt)
+# Function to link Marta Train info to ChatGPT
+def martatrain_to_chatgpt(TRAIN_PATH, **kwergs):
+    marta_train_data = get_marta_train(TRAIN_PATH, **kwergs)
+    chatgpt_response = chatgpt_interaction(marta_train_data)
     
     return chatgpt_response
 
-# Example usage
-if __name__ == '__main__':
-    response = marta_to_chatgpt()
-    print(response)
+# Function to interact with ChatGPT API
+def chatgpt_interaction(marta_train_data):
+    #for loop to extract value from key value pairs
+    for field in marta_train_data:
+        destination = field["DESTINATION"],
+        direction = field["DIRECTION"],
+        event_time = field["EVENT_TIME"],
+        line = field["LINE"],
+        next_arrival = field["NEXT_ARR"],
+        station = field["STATION"],
+        train_id = field["TRAIN_ID"],
+        waiting_seconds = field["WAITING_SECONDS"],
+        waiting_time = field["WAITING_TIME"]
+        
+    train_data = [(f"Destination: {destination}", f"Direction: {direction}", f"Event_Time: {event_time}"), f"Line:{line}", f"Next_Arrival:{next_arrival}", f"Station:{station}", f"Train_ID:{train_id}", f"Waiting_Seconds:{waiting_seconds}", f"Wating_Time:{waiting_time}"]
+    
+    return train_data
+
+    
+    openai.api_key = OPENAI_API_KEY
+    response = openai.Completion.create(
+        engine="gpt-3.5-turbo", 
+        messages=[
+            {"role":"system", "content":{train_data}},
+            {"role":"user", "content":""}
+            ],
+        max_tokens=150  # Adjust as necessary
+    )
+    return response.choices[0].text.strip()
