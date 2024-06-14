@@ -12,7 +12,9 @@ For examples, if you receive the message 'Hola, ¿cómo estás?', you should det
 If you receive the message 'Hallo, wie geht es dir?', you should detect the language as German and respond with 'German---Hello, how are you?'.  If you receive the message 'Ciao, come stai?', you should detect the language as Italian and respond with 'Italian---Hello, how are you?'.  
 If you receive the message 'Olá, como você está?', you should detect the language as Portuguese and respond with 'Portuguese---Hello, how are you?'.`);
 
-
+const systemPromptToLanguage = new SystemMessage(`You are the best translator in the world.  You are going to receive a message in English and a language to translate it into.  You will return the translated message.
+For examples, if you receive the message 'Hello, how are you?---Spanish', you should respond with 'Hola, ¿cómo estás?'.  If you receive the message 'Hello, how are you? --- French', you should respond with 'Bonjour, comment ça va?'.
+`);
 
 type SearchResult = {
   title: string;
@@ -73,6 +75,48 @@ async function Results(phrase: string) {
   return result;
 }
 
+//Translate phrase into original language
+async function TranslateToOriginal(phrase: string, language: string) {
+  const model = new ChatOpenAI({
+    model: "gpt-4o",
+    temperature: 0.9,
+  }).bind({
+    // response_format: {
+    // 	type: "json_object",
+    // },
+    tools: [
+      {
+        type: "function",
+        function: {
+          name: "search_faq",
+          description: "Translate a phrase to the specified language",
+          parameters: {
+            type: "object",
+            properties: {
+              query: {
+                type: "string",
+                description: "English search query that needs to be translated",
+              },
+            }
+          }
+        },
+      },
+    ],
+    tool_choice: "auto",
+  });
+
+  console.log("phrase - ", `${phrase} --- ${language}`);
+
+  const ogPrompt = [
+    systemPromptToLanguage,
+    new HumanMessage(`${phrase} --- ${language}`)
+  ];
+
+  const result = await model.invoke(ogPrompt);
+
+  return result;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -82,6 +126,7 @@ export default async function handler(
     return res.status(405).end(); // Method Not Allowed
   }
   let searchResults:  string | undefined;
+  let translatedResult: string | undefined;
 
   const result = await Results(req.body.text);
   console.log(result.content);
@@ -99,12 +144,17 @@ export default async function handler(
     console.log(searchResults);
 
     //Translate results back to original language
-
-
-
+    const resultx = (await TranslateToOriginal(searchResults, translation.detectedLanguage))?.content;
+    console.log("translated back - ", resultx);
+    console.log(typeof resultx);
+    if (typeof resultx === "string") {
+      translatedResult = resultx;
+    }
+    console.log("translatedResult - ", translatedResult);
   }
-    if (typeof searchResults === "string") {
-      res.status(200).json({ results: searchResults });
+
+    if (typeof translatedResult === "string") {
+      res.status(200).json({ results: translatedResult });
     } else {
       res.status(500).json({ error: 'Failed to translate and search' });
     }
