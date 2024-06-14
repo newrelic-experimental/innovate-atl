@@ -41,30 +41,6 @@ async function Results(phrase: string) {
   const model = new ChatOpenAI({
     model: "gpt-4o",
     temperature: 0.9,
-  }).bind({
-    // response_format: {
-    // 	type: "json_object",
-    // },
-    tools: [
-      {
-        type: "function",
-        function: {
-          name: "search_faq",
-          description: "Translate a phrase and detect the language",
-          parameters: {
-            type: "object",
-            properties: {
-              query: {
-                type: "string",
-                description: "English search query that needs to be translated",
-              },
-            },
-            required: ["query"],
-          },
-        },
-      },
-    ],
-    tool_choice: "auto",
   });
 
   const ogPrompt = [
@@ -81,29 +57,6 @@ async function TranslateToOriginal(phrase: string, language: string) {
   const model = new ChatOpenAI({
     model: "gpt-4o",
     temperature: 0.9,
-  }).bind({
-    // response_format: {
-    // 	type: "json_object",
-    // },
-    tools: [
-      {
-        type: "function",
-        function: {
-          name: "search_faq",
-          description: "Translate a phrase to the specified language",
-          parameters: {
-            type: "object",
-            properties: {
-              query: {
-                type: "string",
-                description: "English search query result that needs to be translated back to the spcified language",
-              },
-            }
-          }
-        },
-      },
-    ],
-    tool_choice: "auto",
   });
 
   console.log("phrase - ", `${phrase} --- ${language}`);
@@ -143,8 +96,6 @@ export default async function handler(
     //Search with translated phrase to get results
     searchResults = (await searchWithPrompt(translation.translatedText))?.answer;
     console.log(searchResults);
-
-    sleep(10000);
 
     //Translate results back to original language
     const resultx = (await TranslateToOriginal(searchResults, translation.detectedLanguage))?.content;
